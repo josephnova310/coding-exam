@@ -316,7 +316,106 @@
         </div>
     </main>
     <script>
+        if (!localStorage.suppliers) {
+            localStorage.suppliers = JSON.stringify([
+                {
+                    _id: "SUP001",
+                    supId: "SUPP0001",
+                    name: "Alpha Traders",
+                    addr1: "Business Bay, Dubai",
+                    addr2: "Office 101",
+                    phone: "+971-501234567",
+                    active: true
+                },
+                {
+                    _id: "SUP002",
+                    supId: "SUPP0002",
+                    name: "Beta Supplies",
+                    addr1: "Deira, Dubai",
+                    addr2: "Warehouse 5",
+                    phone: "+971-502345678",
+                    active: false
+                }
+            ]);
+        }
 
+/* ---------------- VARIABLES ---------------- */
+const suppliers = JSON.parse(localStorage.suppliers);
+const params = new URLSearchParams(window.location.search);
+const supplierIdParam = params.get("supplierId");
+
+let currentSupplierIndex = 0;
+let isDirty = false;
+
+/* ---------------- LOAD SUPPLIER ---------------- */
+function fillForm() {
+    if (!suppliers.length) return;
+
+    currentSupplierIndex = suppliers.findIndex(
+        s => s._id === supplierIdParam
+    );
+
+    if (currentSupplierIndex === -1) currentSupplierIndex = 0;
+
+    const s = suppliers[currentSupplierIndex];
+
+    supId.value = s.supId;
+    name.value = s.name;
+    addr1.value = s.addr1;
+    addr2.value = s.addr2;
+
+    const parts = s.phone.split("-");
+    countryCode.value = parts[0];
+    phone.value = parts[1];
+
+    activeStatus.checked = s.active;
+    updateLabel();
+
+    isDirty = false;
+}
+
+/* ---------------- STATUS LABEL ---------------- */
+function updateLabel() {
+    statusLabel.innerText = activeStatus.checked ? "Active" : "Inactive";
+    isDirty = true;
+}
+
+/* ---------------- SAVE DATA ---------------- */
+function saveData() {
+    if (!supId.value || !name.value) {
+        alert("Supplier ID and Name are required");
+        return;
+    }
+
+    suppliers[currentSupplierIndex] = {
+        ...suppliers[currentSupplierIndex],
+        supId: supId.value,
+        name: name.value,
+        addr1: addr1.value,
+        addr2: addr2.value,
+        phone: `${countryCode.value}-${phone.value}`,
+        active: activeStatus.checked
+    };
+
+    localStorage.suppliers = JSON.stringify(suppliers);
+    alert("Supplier updated successfully!");
+    isDirty = false;
+}
+
+/* ---------------- BACK / CANCEL ---------------- */
+function goBack() {
+    if (isDirty && !confirm("You have unsaved changes. Leave anyway?")) return;
+    window.history.back();
+}
+
+/* ---------------- DIRTY TRACKING ---------------- */
+document.querySelectorAll("input, select").forEach(el => {
+    el.addEventListener("input", () => isDirty = true);
+});
+
+/* ---------------- INIT ---------------- */
+fillForm();
+        
     </script>
 </body>
 </html>
