@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="clock"></p>
+
+<script>
+setInterval(() => {
+    let now = new Date();
+    clock.innerHTML = now.getHours() + ":" + now.getMinutes();
+}, 1000)
+</script>
+
+</body>
+</html>
