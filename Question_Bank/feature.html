@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a00b2;
+            --bg-color: #f3f4f6;
+            --card-bg: #e5e8ff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --success: #4caf50;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow: hidden;
+
+        }
+
+        .sidebar {
+            width: 80px;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;  
+
+        }
+
+        .logo {
+            color:white;
+            font-size: 12px;
+            font-size: bold;
+            margin-bottom: 40px;
+
+        }
+        .nav-icon {
+            width: 40px;
+            height: 40px;border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+
+        }
+        .nav-icon.active, .nav-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            height: 60px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            flex: 1;
+
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+        }
+        .user-name{
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+
+        }
+        .user-role {
+            font-size: 11px;
+            color: var(--text-gray);
+        }
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content-body {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            font-size: 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        .form-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 700px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        label span {
+            color: red;
+        }
+
+        input, select {
+            width: 100%;
+            height: 45px;
+            padding: 0 15px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            background: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .phone-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phone-code {
+            width: 100px;
+        }
+
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .switch {
+            position: relative;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            cursor: pointer;
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 10px 40px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-update {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: white;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">logo</div>
+        <div class="nav-icon">⌂</div>
+        <div class="nav-icon">✓</div>
+        <div class="nav-icon">📄</div>
+        <div class="nav-icon active">⚙️</div>
+    </div>
+    <main class="main-content">
+        <header>
+            <div style="width: 100px" ></div>
+            <h1>Supplier Management</h1>
+            <div class="user-profile">
+                <div class="">
+                    <span class="user-name">Initial User </span><span class="user-role ">Administrator</span>
+                </div>
+                <div class="avatar">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="user-profile-picture">
+                </div>
+            </div>
+        </header>
+
+
+        <div class="content-body">
+            <button class="back-btn" onclick="fillForm()">←</button>
+            <div class="form-card">
+                <div class="input-group"><label for="">Supplier ID <span>*</span></label><input type="text" id="supId"></div>
+                <div class="input-group"><label for="">Supplier name</label><input type="text" id="name"></div>
+                <div class="input-group"><label for="">address line 1</label><input type="text" id="addr1"></div>
+                <div class="input-group"><label for="">address line 2</label><input type="text" id="addr2"></div>
+                <div class="input-group"><label for="">Contact Number</label>
+                    <div class="phone-wrapper">
+                        <select name="" id="countryCode" class="phone-code">
+                            <option value="+91">+91</option>
+                            <option value="+44">+44</option>
+                            <option value="+91">+91</option>
+                            <option value="+61">+61</option>
+                            <option value="+81">+81</option>
+                        </select>
+                        <input id="phone">
+                    </div>
+                </div>
+                <div class="toggle-wrapper">
+                    <label for="" class="switch">
+                        <input type="checkbox" name="" id="activeStatus" onchange="updateLabel()">
+                        <span class="slider"></span>
+                    </label>
+                    <span id="statusLabel">Active</span>
+
+                </div>
+                <div class="actions">
+                    <button class="btn btn-update" onclick="saveData()">Update</button>
+                    <button class="btn btn-cancel" onclick="goBack()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+
+    </script>
+</body>
+</html>
