@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Supplier</title>
+    <title>Edit Supplier | Supplier Management</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
@@ -17,277 +17,72 @@
             --success: #4caf50;
             --error: #dc2626;
             --white: #ffffff;
-            --border-gray: #d1d5db;
+            --border-gray: #d2d5da;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { display: flex; height: 100vh; background-color: var(--bg-body); overflow: hidden; }
 
-        body {
-            display: flex;
-            height: 100vh;
-            background-color: var(--bg-body);
-            overflow: hidden;
-        }
+        /* --- Sidebar --- */
+        .sidebar { width: 80px; background-color: var(--primary-purple); display: flex; flex-direction: column; align-items: center; padding-top: 20px; flex-shrink: 0; }
+        .logo-box { color: white; margin-bottom: 40px; font-weight: 800; font-size: 12px; }
+        .nav-item { width: 44px; height: 44px; display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.6); margin-bottom: 15px; border-radius: 8px; cursor: pointer; }
+        .nav-item.active { background-color: rgba(255,255,255,0.2); color: white; }
 
-        /* --- Sidebar (Left) --- */
-        .sidebar {
-            width: 80px;
-            background-color: var(--primary-purple);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            flex-shrink: 0;
-        }
-
-        .logo {
-            color: white;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 40px;
-        }
-
-        .nav-item {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .material-icons-round { font-size: 24px; }
-
-        /* --- Main Content Area --- */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- Header (Top) --- */
-        header {
-            height: 64px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            border-bottom: 1px solid #e5e7eb;
-            flex-shrink: 0;
-        }
-
-        .header-spacer { width: 150px; } /* To balance the profile on right */
-
-        h1 {
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #374151;
-            text-align: center;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 150px;
-            justify-content: flex-end;
-        }
-
-        .user-text { text-align: right; }
-        .user-name { display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); }
+        /* --- Main Content & Header --- */
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+        header { height: 64px; background: white; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid #e5e7eb; }
+        header h1 { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .user-profile { display: flex; align-items: center; gap: 12px; min-width: 180px; justify-content: flex-end; }
+        .logout-btn { color: #9ca3af; cursor: pointer; font-size: 24px; margin-right: 5px; }
+        .user-info { text-align: right; }
+        .user-name { display: block; font-size: 13px; font-weight: 700; color: var(--text-dark); }
         .user-role { display: block; font-size: 11px; color: var(--text-gray); }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 
-        /* --- Scrollable Body --- */
-        .content-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* --- Content Area --- */
+        .content-scroll { flex: 1; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; align-items: center; }
+        .top-bar { width: 100%; max-width: 800px; margin-bottom: 15px; }
+        .back-btn { background: none; border: none; cursor: pointer; color: var(--text-gray); font-size: 28px; }
 
-        /* Back Arrow Area */
-        .top-actions {
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-gray);
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        /* --- The Form Card --- */
-        .form-card {
-            background-color: var(--card-bg);
-            width: 100%;
-            max-width: 800px;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
+        /* --- Form Card --- */
+        .form-card { background-color: var(--card-bg); width: 100%; max-width: 800px; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        @media (max-width: 768px) { .form-card { padding: 20px; } }
 
         .input-group { margin-bottom: 20px; }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-gray);
-        }
-
+        label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--text-gray); }
         label span { color: var(--error); }
+        
+        input, select { width: 100%; height: 42px; padding: 0 12px; border-radius: 6px; border: 1px solid var(--border-gray); font-size: 14px; outline: none; background: white; transition: 0.2s; }
+        input:focus { border-color: var(--primary-purple); }
+        
+        .contact-row { display: grid; grid-template-columns: 100px 1fr; gap: 12px; }
 
-        input, select {
-            width: 100%;
-            height: 44px;
-            padding: 0 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-gray); /* Default border */
-            font-size: 14px;
-            outline: none;
-            background: white;
-            color: var(--text-dark);
-            transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--primary-purple);
-        }
-
-        /* Split Contact Layout */
-        .contact-row {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 12px;
-        }
-
-        /* Toggle Switch */
-        .toggle-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 24px;
-        }
-
+        /* --- Toggle (50x24px) --- */
+        .toggle-row { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            border-radius: 24px;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            border-radius: 50%;
-            transition: .4s;
-        }
-
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 24px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .4s; }
         input:checked + .slider { background-color: var(--success); }
-        input:checked + .slider:before { transform: translateX(24px); }
-
+        input:checked + .slider:before { transform: translateX(26px); }
         .status-text { font-size: 14px; color: var(--text-gray); font-weight: 500; }
 
-        /* Buttons */
-        .btn-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
+        /* --- Buttons --- */
+        .btn-row { display: flex; justify-content: center; gap: 15px; margin-top: 40px; }
+        .btn { padding: 10px 45px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 14px; transition: 0.2s; }
+        .btn-update { background-color: var(--primary-purple); color: white; }
+        .btn-cancel { background-color: white; color: var(--text-gray); border: 1px solid var(--border-gray); }
 
-        .btn {
-            padding: 10px 40px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-            border: none;
-        }
-
-        .btn-update {
-            background-color: var(--primary-purple);
-            color: white;
-        }
-
-        .btn-cancel {
-            background-color: white;
-            color: var(--text-gray);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-
-        /* Error Messages */
-        .error-msg {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 4px;
-            display: none;
-        }
-        
-        /* Dropdown styling box */
-        .select-header-box {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-gray);
-        }
-
-        #no-data {
-            text-align: center;
-            color: var(--text-gray);
-            margin-top: 50px;
-        }
+        .error-msg { color: var(--error); font-size: 12px; margin-top: 5px; display: none; font-weight: 500; }
+        #no-data-msg { text-align: center; color: var(--text-gray); margin-top: 60px; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <div class="logo">Logo</div>
+        <div class="logo-box">Logo</div>
         <div class="nav-item"><span class="material-icons-round">grid_view</span></div>
         <div class="nav-item"><span class="material-icons-round">check_box</span></div>
         <div class="nav-item"><span class="material-icons-round">description</span></div>
@@ -296,81 +91,75 @@
 
     <main class="main-content">
         <header>
-            <div class="header-spacer"></div>
+            <div style="width: 180px;"></div>
             <h1>Supplier Management</h1>
             <div class="user-profile">
-                <span class="material-icons-round" style="color:#9ca3af; margin-right:10px;">logout</span>
-                <div class="user-text">
+                <span class="material-icons-round logout-btn">logout</span>
+                <div class="user-info">
                     <span class="user-name">Initial User</span>
                     <span class="user-role">Administrator</span>
                 </div>
-                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
+                <img src="https://i.pravatar.cc/150?u=initial" alt="Avatar" class="avatar">
             </div>
         </header>
 
         <div class="content-scroll">
-            
-            <div class="top-actions">
+            <div class="top-bar">
                 <button class="back-btn" onclick="handleNavigation()">
                     <span class="material-icons-round">arrow_back</span>
                 </button>
             </div>
 
-            <div id="no-data" style="display:none;">No suppliers found.</div>
+            <div id="no-data-msg" style="display:none;">No suppliers found. Please add suppliers first.</div>
 
             <div class="form-card" id="form-container">
-                
                 <div class="input-group">
-                    <label>Select Supplier to Edit *</label>
-                    <select id="supplierSelect" onchange="loadSupplierData(this.value)">
-                        </select>
+                    <label>Select Supplier to Edit <span>*</span></label>
+                    <select id="supplierSelect" onchange="loadSelectedSupplier(this.value)"></select>
                 </div>
-                
-                <div style="height: 1px; background: #d1d5db; margin: 20px 0; opacity: 0.5;"></div>
 
-                <form onsubmit="handleUpdate(event)">
-                    <input type="hidden" id="_id">
-                    <input type="hidden" id="userId">
+                <hr style="border:0; border-top:1px solid #d2d5da; margin: 25px 0; opacity:0.3;">
 
+                <form id="supplierForm" onsubmit="handleUpdate(event)">
                     <div class="input-group">
                         <label>Supplier Name <span>*</span></label>
-                        <input type="text" id="supplierName">
-                        <div class="error-msg" id="err-name">Name is required</div>
+                        <input type="text" id="supplierName" placeholder="Enter supplier name">
+                        <div class="error-msg" id="err-name">Supplier name is required</div>
                     </div>
 
                     <div class="input-group">
                         <label>Supplier Id (8) <span>*</span></label>
-                        <input type="text" id="supplierIdDisplay" maxlength="8">
+                        <input type="text" id="supplierIdDisplay" maxlength="8" placeholder="Enter 8 character ID">
                         <div class="error-msg" id="err-id">ID must be exactly 8 characters</div>
                     </div>
 
                     <div class="input-group">
                         <label>Address Line 1 <span>*</span></label>
-                        <input type="text" id="addressLine1">
+                        <input type="text" id="addressLine1" placeholder="Address line 1">
                     </div>
 
                     <div class="input-group">
                         <label>Address Line 2 <span>*</span></label>
-                        <input type="text" id="addressLine2">
+                        <input type="text" id="addressLine2" placeholder="Address line 2">
                     </div>
 
                     <div class="input-group">
                         <label>Contact Number <span>*</span></label>
                         <div class="contact-row">
                             <select id="countryCode">
-                                <option value="+971">+971</option>
-                                <option value="+1">+1</option>
-                                <option value="+44">+44</option>
-                                <option value="+91">+91</option>
+                                <option value="+971">+971 UAE</option>
+                                <option value="+1">+1 USA</option>
+                                <option value="+44">+44 UK</option>
+                                <option value="+91">+91 India</option>
                             </select>
-                            <input type="number" id="contactNumber">
+                            <input type="number" id="contactNumber" placeholder="Number">
                         </div>
-                        <div class="error-msg" id="err-contact">Contact must be 9-15 digits</div>
+                        <div class="error-msg" id="err-contact">Contact must be 9–15 digits</div>
                     </div>
 
                     <div class="toggle-row">
                         <label class="switch">
-                            <input type="checkbox" id="activeStatus" onchange="updateStatusLabel()">
+                            <input type="checkbox" id="activeStatus" onchange="updateToggleText()">
                             <span class="slider"></span>
                         </label>
                         <span class="status-text" id="statusLabel">Active</span>
@@ -386,186 +175,148 @@
     </main>
 
     <script>
-        // --- 1. MOCK DATA (Ensures it works immediately) ---
-        if (!localStorage.suppliers) {
-            localStorage.suppliers = JSON.stringify([
-                { 
-                    _id: "SUP001", 
-                    name: "Alpha Traders", 
-                    supplierId: "12968479", 
-                    contactNumber: "+1-1234567890", 
-                    addressLine1: "Alpha HQ", 
-                    addressLine2: "Bahrain", 
-                    active: true, 
-                    userId: "user123" 
-                },
-                { 
-                    _id: "SUP002", 
-                    name: "Beta Supplies", 
-                    supplierId: "SUPP0002", 
-                    contactNumber: "+971-502345678", 
-                    addressLine1: "Deira, Dubai", 
-                    addressLine2: "Warehouse 5", 
-                    active: false, 
-                    userId: "user123" 
-                }
-            ]);
-        }
-
-        // --- 2. LOGIC ---
         let suppliers = [];
-        let initialFormData = {};
-        const formContainer = document.getElementById('form-container');
-        const noDataMsg = document.getElementById('no-data');
-        const supplierSelect = document.getElementById('supplierSelect');
+        let initialSnapshot = "";
 
+        // --- 1. Load Data & URL Data Passing ---
         document.addEventListener('DOMContentLoaded', () => {
-            loadSuppliers();
+            // Mock Data for testing the ?id= parameter
+            if (!localStorage.getItem('suppliers')) {
+                localStorage.setItem('suppliers', JSON.stringify([
+                    { _id: "SUP001", name: "Alfa", supplierId: "12968479", contactNumber: "+1-1234567890", addressLine1: "Alfa HQ", addressLine2: "Bahrain", active: true, userId: "user123" },
+                    { _id: "SUP002", name: "Beta Supplies", supplierId: "SUPP0002", contactNumber: "+971-502345678", addressLine1: "Deira, Dubai", addressLine2: "Warehouse 5", active: false, userId: "user123" }
+                ]));
+            }
+
+            suppliers = JSON.parse(localStorage.getItem('suppliers') || "[]");
+            
+            if (suppliers.length === 0) {
+                document.getElementById('form-container').style.display = 'none';
+                document.getElementById('no-data-msg').style.display = 'block';
+                return;
+            }
+
+            renderDropdown();
+
+            // Handle URL Data Passing (?id=SUPP0002)
+            const urlParams = new URLSearchParams(window.location.search);
+            const passedId = urlParams.get('id'); // Get the value from the link
+            
+            // Find supplier by the custom ID (supplierId) or internal ID (_id)
+            const matchedSupplier = suppliers.find(s => s.supplierId === passedId || s._id === passedId);
+            const targetId = matchedSupplier ? matchedSupplier._id : suppliers[0]._id;
+
+            document.getElementById('supplierSelect').value = targetId;
+            loadSelectedSupplier(targetId);
         });
 
-        function loadSuppliers() {
-            try {
-                suppliers = JSON.parse(localStorage.suppliers || "[]");
-            } catch (e) {
-                console.error(e);
-                suppliers = [];
-            }
-
-            if (suppliers.length === 0) {
-                formContainer.style.display = 'none';
-                noDataMsg.style.display = 'block';
-            } else {
-                formContainer.style.display = 'block';
-                noDataMsg.style.display = 'none';
-                populateDropdown();
-            }
+        function renderDropdown() {
+            const select = document.getElementById('supplierSelect');
+            select.innerHTML = suppliers.map(s => 
+                `<option value="${s._id}">${s.name} (${s.supplierId})</option>`
+            ).join('');
         }
 
-        function populateDropdown() {
-            supplierSelect.innerHTML = '';
-            suppliers.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s._id;
-                opt.text = `${s.name} (${s.supplierId})`;
-                supplierSelect.appendChild(opt);
-            });
-            if (suppliers.length > 0) loadSupplierData(suppliers[0]._id);
-        }
+        // --- 2. Auto-Population ---
+        function loadSelectedSupplier(id) {
+            const s = suppliers.find(item => item._id === id);
+            if (!s) return;
 
-        function loadSupplierData(id) {
-            const supplier = suppliers.find(s => s._id === id);
-            if (!supplier) return;
-
-            // Reset Errors
-            document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
-
-            // Fill IDs
-            document.getElementById('_id').value = supplier._id;
-            document.getElementById('userId').value = supplier.userId || '';
-
-            // Fill Texts
-            document.getElementById('supplierName').value = supplier.name || '';
-            document.getElementById('supplierIdDisplay').value = supplier.supplierId || '';
-            document.getElementById('addressLine1').value = supplier.addressLine1 || '';
-            document.getElementById('addressLine2').value = supplier.addressLine2 || '';
-
-            // Split Contact
-            if (supplier.contactNumber && supplier.contactNumber.includes('-')) {
-                const parts = supplier.contactNumber.split('-');
+            document.getElementById('supplierName').value = s.name;
+            document.getElementById('supplierIdDisplay').value = s.supplierId;
+            document.getElementById('addressLine1').value = s.addressLine1 || "";
+            document.getElementById('addressLine2').value = s.addressLine2 || "";
+            
+            // Split Contact logic
+            if (s.contactNumber && s.contactNumber.includes('-')) {
+                const parts = s.contactNumber.split('-');
                 document.getElementById('countryCode').value = parts[0];
                 document.getElementById('contactNumber').value = parts[1];
-            } else {
-                document.getElementById('countryCode').value = "+971";
-                document.getElementById('contactNumber').value = "";
             }
 
-            // Toggle
-            document.getElementById('activeStatus').checked = supplier.active;
-            updateStatusLabel();
-
-            saveInitialState();
-        }
-
-        function updateStatusLabel() {
-            const isChecked = document.getElementById('activeStatus').checked;
-            document.getElementById('statusLabel').innerText = isChecked ? "Active" : "Inactive";
-        }
-
-        function saveInitialState() {
-            initialFormData = {
-                name: document.getElementById('supplierName').value,
-                sid: document.getElementById('supplierIdDisplay').value,
-                addr1: document.getElementById('addressLine1').value,
-                addr2: document.getElementById('addressLine2').value,
-                cc: document.getElementById('countryCode').value,
-                num: document.getElementById('contactNumber').value,
-                active: document.getElementById('activeStatus').checked
-            };
-        }
-
-        function handleUpdate(e) {
-            e.preventDefault();
-
-            // Values
-            const name = document.getElementById('supplierName').value.trim();
-            const sid = document.getElementById('supplierIdDisplay').value.trim();
-            const addr1 = document.getElementById('addressLine1').value.trim();
-            const addr2 = document.getElementById('addressLine2').value.trim();
-            const cc = document.getElementById('countryCode').value;
-            const num = document.getElementById('contactNumber').value.trim();
-            const active = document.getElementById('activeStatus').checked;
-            const internalId = document.getElementById('_id').value;
-
-            // Validation
-            let isValid = true;
+            document.getElementById('activeStatus').checked = s.active;
+            updateToggleText();
+            
+            // Clear errors and take state snapshot
             document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
-
-            if (!name) { document.getElementById('err-name').style.display = 'block'; isValid = false; }
-            if (sid.length !== 8) { document.getElementById('err-id').style.display = 'block'; isValid = false; }
-            if (num.length < 9 || num.length > 15) { document.getElementById('err-contact').style.display = 'block'; isValid = false; }
-
-            if (!isValid) return;
-
-            // Save
-            const index = suppliers.findIndex(s => s._id === internalId);
-            if (index !== -1) {
-                suppliers[index].name = name;
-                suppliers[index].supplierId = sid;
-                suppliers[index].addressLine1 = addr1;
-                suppliers[index].addressLine2 = addr2;
-                suppliers[index].contactNumber = `${cc}-${num}`;
-                suppliers[index].active = active;
-
-                localStorage.suppliers = JSON.stringify(suppliers);
-                alert("Supplier updated successfully!");
-                
-                // Refresh
-                const curVal = supplierSelect.value;
-                populateDropdown();
-                supplierSelect.value = curVal;
-                saveInitialState();
-            }
+            captureState();
         }
 
-        function hasUnsavedChanges() {
-            const currentData = {
-                name: document.getElementById('supplierName').value,
-                sid: document.getElementById('supplierIdDisplay').value,
-                addr1: document.getElementById('addressLine1').value,
-                addr2: document.getElementById('addressLine2').value,
+        function updateToggleText() {
+            document.getElementById('statusLabel').innerText = 
+                document.getElementById('activeStatus').checked ? "Active" : "Inactive";
+        }
+
+        // --- 3. Dirty Checking & Navigation ---
+        function captureState() {
+            const state = {
+                n: document.getElementById('supplierName').value,
+                id: document.getElementById('supplierIdDisplay').value,
+                a1: document.getElementById('addressLine1').value,
+                a2: document.getElementById('addressLine2').value,
                 cc: document.getElementById('countryCode').value,
-                num: document.getElementById('contactNumber').value,
-                active: document.getElementById('activeStatus').checked
+                pn: document.getElementById('contactNumber').value,
+                ac: document.getElementById('activeStatus').checked
             };
-            return JSON.stringify(currentData) !== JSON.stringify(initialFormData);
+            initialSnapshot = JSON.stringify(state);
+        }
+
+        function isDirty() {
+            const current = {
+                n: document.getElementById('supplierName').value,
+                id: document.getElementById('supplierIdDisplay').value,
+                a1: document.getElementById('addressLine1').value,
+                a2: document.getElementById('addressLine2').value,
+                cc: document.getElementById('countryCode').value,
+                pn: document.getElementById('contactNumber').value,
+                ac: document.getElementById('activeStatus').checked
+            };
+            return JSON.stringify(current) !== initialSnapshot;
         }
 
         function handleNavigation() {
-            if (hasUnsavedChanges()) {
+            if (isDirty()) {
                 if (!confirm("You have unsaved changes. Discard them?")) return;
             }
-            const userId = document.getElementById('userId').value || 'user123';
+            const userId = suppliers[0]?.userId || 'user123';
             window.location.href = `/app/settings/suppliers/${userId}.html`;
+        }
+
+        // --- 4. Validation & Storage ---
+        function handleUpdate(e) {
+            e.preventDefault();
+            const name = document.getElementById('supplierName').value.trim();
+            const sid = document.getElementById('supplierIdDisplay').value.trim();
+            const phone = document.getElementById('contactNumber').value.trim();
+            
+            let valid = true;
+            document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+
+            if (!name) { document.getElementById('err-name').style.display = 'block'; valid = false; }
+            if (sid.length !== 8) { document.getElementById('err-id').style.display = 'block'; valid = false; }
+            if (phone.length < 9 || phone.length > 15) { document.getElementById('err-contact').style.display = 'block'; valid = false; }
+
+            if (!valid) return;
+
+            const targetId = document.getElementById('supplierSelect').value;
+            const index = suppliers.findIndex(s => s._id === targetId);
+
+            suppliers[index] = {
+                ...suppliers[index],
+                name: name,
+                supplierId: sid,
+                addressLine1: document.getElementById('addressLine1').value,
+                addressLine2: document.getElementById('addressLine2').value,
+                contactNumber: `${document.getElementById('countryCode').value}-${phone}`,
+                active: document.getElementById('activeStatus').checked
+            };
+
+            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            alert("Supplier updated successfully!");
+            
+            renderDropdown();
+            document.getElementById('supplierSelect').value = targetId;
+            captureState();
         }
     </script>
 </body>
